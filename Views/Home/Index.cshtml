@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        nav {
+            background-color: #343a40;
+        }
+
+            nav a {
+                color: #fff;
+                padding: 0.5rem 1rem;
+                text-decoration: none;
+                transition: background-color 0.3s ease-in-out;
+            }
+
+                nav a:hover {
+                    background-color: #495057;
+                }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        section {
+            margin-top: 2rem;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #343a40;
+            color: #fff;
+            border-radius: 0.5rem;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        keyframes fadeInUp {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+
+        <header class="text-center mt-5">
+            <h1 class="display-4">Welcome to the Forum</h1>
+            <p>
+                Welcome to <strong>Forumy</strong> – the hub for insightful discussions and collaborative learning in the world of IT.
+                Whether you're a seasoned professional or just starting your journey in Dev , 
+                our community is here to foster knowledge exchange and connect enthusiasts from around the globe. Dive into engaging conversations,
+                share your experiences, and make valuable connections with like-minded individuals.
+                We encourage open-mindedness, respect, and a passion for [topic] in every interaction.
+                Explore the threads, ask questions, and let's build a vibrant community together!</p>
+        </header>
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="~/Forum1.jpg" alt="login" width="180px" height="120px" style="margin-left:50px" />
+                            <h3 style="text-align: center;" class="card-text">Your Startup Teams.</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="~/Forum2.jpg" alt="login" width="180px" height="120px" style="margin-left:50px" />
+                            <h3 style="text-align: center;" class="card-text">Your Startup Teams.</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="~/Forum3.jpg" alt="login" width="180px" height="120px" style="margin-left:50px" />
+                            <h3 style="text-align: center;" class="card-text">Your Startup Teams.</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+                
+                   
+
+        <footer class="text-center mt-5">
+            <p>&copy; 2023 <strong>Forumy</strong>. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
