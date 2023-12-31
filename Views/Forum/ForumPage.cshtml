@@ -1,0 +1,86 @@
+﻿@model List<Forum>
+
+@{
+    ViewData["Title"] = "Forum Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add the existing head content here -->
+    <!-- ... -->
+</head>
+<body>
+    <div class="container">
+
+        <header class="text-center mt-5">
+            <h1 class="display-4">Welcome to the Forum</h1>
+            <!-- Your existing header content -->
+        </header>
+
+        <section>
+            <!-- Display forums with comments using static data -->
+            @foreach (var forum in Model)
+            {
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h3>@forum.Title</h3>
+                        <p>@forum.Description</p>
+
+                        <h4>Comments</h4>
+                        @foreach (var comment in forum.Comments)
+                        {
+                            <div class="comment">
+                                <p>@comment.UserName: @comment.Content</p>
+                            </div>
+                        }
+
+                        <!-- Form to add a new comment -->
+                        <form asp-controller="Forum" asp-action="AddComment" method="post">
+                            <input type="hidden" name="ForumId" value="@forum.Id" />
+                            <div class="form-group">
+                                <label for="UserName">Your Name:</label>
+                                <input type="text" class="form-control" id="UserName" name="UserName" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="Content">Comment:</label>
+                                <textarea class="form-control" id="Content" name="Content" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Comment</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </section>
+
+        <section>
+            <!-- Add a form for users to add new forums (static data) -->
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h3>Add a New Forum</h3>
+                    <form asp-controller="Forum" asp-action="AddForum" method="post">
+                        <!-- Your form fields for adding a new forum -->
+                        <div class="form-group">
+                            <label for="Title">Title:</label>
+                            <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter title" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description:</label>
+                            <textarea class="form-control" id="Description" name="Description" rows="3" placeholder="Enter description" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Post Forum</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-5">
+            <!-- Your existing footer content -->
+        </footer>
+
+    </div>
+    <!-- Include your scripts at the end of the body -->
+    <!-- ... -->
+</body>
+</html>
