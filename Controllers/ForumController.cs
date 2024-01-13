@@ -4,6 +4,8 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using Forumy.Models;
+using System.Reflection.PortableExecutable;
+using System.Linq.Expressions;
 
 namespace Forumy.Controllers
 {
@@ -23,6 +25,7 @@ namespace Forumy.Controllers
             return View(forums);
         }
 
+       
         // Helper method to retrieve forums with comments from the database
         private List<Forum> GetForumsFromDatabase()
         {
@@ -77,14 +80,36 @@ namespace Forumy.Controllers
             return forums;
         }
 
-        // GET: ForumController/CreateForum
-       
-        // POST: ForumController/CreateForum
+        public IActionResult AddForum()
+        {
+            return View();
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult AddForum(Forum forum)
         {
-            if (ModelState.IsValid)
+            // Handle user login and authentication using MySQL connection
+            if (CreateForum(forum))
+            {
+                TempData["SuccessMessage"] = "Add Forum successful!";
+
+                // Redirect to the ForumPage action
+                return RedirectToAction("ForumPage");
+            }
+            else
+            {
+                // Authentication failed, return to the AddForum view with an error message
+                ModelState.AddModelError(string.Empty, "Failed to add the forum to the database.");
+                return View(forum);
+            }
+        }
+
+
+        // Action to handle the form submission and add a new forum to the database
+
+        private bool CreateForum(Forum forum)
+        {
+            try
             {
                 // Add logic to save the new forum to the database
                 using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
@@ -97,17 +122,25 @@ namespace Forumy.Controllers
                         insertForumCmd.Parameters.AddWithValue("@Title", forum.Title);
                         insertForumCmd.Parameters.AddWithValue("@Description", forum.Description);
 
-                        insertForumCmd.ExecuteNonQuery();
+                        // Execute the INSERT operation
+                        int rowsAffected = insertForumCmd.ExecuteNonQuery();
+
+                        // Check if the INSERT operation was successful (at least one row affected)
+                        return rowsAffected > 0;
                     }
                 }
-
-                return RedirectToAction(nameof(ForumPage));
             }
-
-            return RedirectToAction(nameof(ForumPage));
+            catch (Exception ex)
+            {
+                // Handle exceptions, log them, or display an error message
+                // You can customize this part based on your application's requirements
+                Console.WriteLine($"Error in CreateForum: {ex.Message}");
+                return false;
+            }
         }
 
-        // GET: ForumController/Details/5
+
+
         public IActionResult Details(int id)
         {
             Forum forum = GetForumById(id);
@@ -183,41 +216,63 @@ namespace Forumy.Controllers
             return View(forum);
         }
 
-        // GET: ForumController/DeleteForum/5
-        public IActionResult DeleteForum(int id)
+        
+        public IActionResult DeleteForum(int ForumId)
         {
-            Forum forum = GetForumById(id);
-            return View(forum);
+            if (ConfirmDeleteForum(ForumId))
+            {
+                TempData["SuccessMessage"] = "Delete Forum successful!";
+
+                // Redirect to the ForumPage action
+                return RedirectToAction("ForumPage");
+            }
+            else
+            {
+                // Authentication failed, return to the AddForum view with an error message
+                ModelState.AddModelError(string.Empty, "Failed to add the forum to the database.");
+                return RedirectToAction();
+            }
         }
 
-        // POST: ForumController/DeleteForum/5
-        [HttpPost, ActionName("DeleteForum")]
-        [ValidateAntiForgeryToken]
-        public IActionResult ConfirmDeleteForum(int id)
+        
+        [HttpPost]
+       
+        private bool   ConfirmDeleteForum(int id)
         {
             // Add logic to delete the forum and associated comments from the database
-            using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            try
             {
-                connection.Open();
-
-                // Delete comments associated with the forum
-                string deleteCommentsQuery = "DELETE FROM comments WHERE ForumId = @ForumId";
-                using (MySqlCommand deleteCommentsCmd = new MySqlCommand(deleteCommentsQuery, connection))
+                using (MySqlConnection connection = new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
-                    deleteCommentsCmd.Parameters.AddWithValue("@ForumId", id);
-                    deleteCommentsCmd.ExecuteNonQuery();
-                }
+                    connection.Open();
 
-                // Delete the forum
-                string deleteForumQuery = "DELETE FROM forums WHERE Id = @ForumId";
-                using (MySqlCommand deleteForumCmd = new MySqlCommand(deleteForumQuery, connection))
-                {
-                    deleteForumCmd.Parameters.AddWithValue("@ForumId", id);
-                    deleteForumCmd.ExecuteNonQuery();
+                    // Delete comments associated with the forum
+                    string deleteCommentsQuery = "DELETE FROM comments WHERE ForumId = @ForumId";
+                    using (MySqlCommand deleteCommentsCmd = new MySqlCommand(deleteCommentsQuery, connection))
+                    {
+                        deleteCommentsCmd.Parameters.AddWithValue("@ForumId", id);
+                        deleteCommentsCmd.ExecuteNonQuery();
+                    }
+
+                    // Delete the forum
+                    string deleteForumQuery = "DELETE FROM forums WHERE Id = @ForumId";
+                    using (MySqlCommand deleteForumCmd = new MySqlCommand(deleteForumQuery, connection))
+                    {
+                        deleteForumCmd.Parameters.AddWithValue("@ForumId", id);
+                        deleteForumCmd.ExecuteNonQuery();
+                    }
                 }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, log them, or display an error message
+                // You can customize this part based on your application's requirements
+                Console.WriteLine($"Error in CreateForum: {ex.Message}");
+                return false;
             }
 
-            return RedirectToAction(nameof(ForumPage));
+
         }
 
         // GET: ForumController/EditComment/5

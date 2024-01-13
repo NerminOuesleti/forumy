@@ -1,0 +1,40 @@
+﻿@model Forum
+@{
+    ViewData["Title"] = "Add Forum";
+}
+
+<body>
+    <div class="container">
+        <header class="text-center mt-5">
+            <h1 class="display-4">Add a New Forum</h1>
+        </header>
+
+        <section>
+            <div class="card mt-5">
+                <div class="card-body">
+                    <form asp-controller="Forum" asp-action="AddForum" method="post">
+                        <div class="form-group">
+                            <label asp-for="Title" class="font-weight-bold">Title:</label>
+                            <input asp-for="Title" class="form-control" id="Title" name="Title" placeholder="Enter title" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="font-weight-bold">Description:</label>
+                            <textarea asp-for="Description" id="Description" name="Description" rows="5" placeholder="Enter description" class="form-control" required></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Post Forum</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-muted text-center mt-5">
+            <p>&copy; 2024 Your Forum App. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

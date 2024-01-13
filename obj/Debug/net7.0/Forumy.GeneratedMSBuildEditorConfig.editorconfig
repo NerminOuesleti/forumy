@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Web_Dev\Forumy
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Web_Dev/Forumy/Views/Forum/AddForum.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cQWRkRm9ydW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Web_Dev/Forumy/Views/Forum/ForumPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ydW1cRm9ydW1QYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

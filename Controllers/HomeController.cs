@@ -38,6 +38,7 @@ namespace Forumy.Controllers
             }
             else
             {
+                TempData["FailedMessage"] = "Invalid username or password!";
                 // Authentication failed, return to the login page with an error message
                 ModelState.AddModelError(string.Empty, "Invalid username or password");
                 return View(user);
